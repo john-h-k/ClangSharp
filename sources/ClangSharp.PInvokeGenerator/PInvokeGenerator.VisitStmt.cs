@@ -1149,6 +1149,24 @@ namespace ClangSharp
                     break;
                 }
 
+                case CX_StmtClass.CX_StmtClass_NullStmt:
+                {
+                    // intentionally ignore them. no semantic meaning, basically a typo
+                    break;
+                }
+
+                case CX_StmtClass.CX_StmtClass_GotoStmt:
+                {
+                    VisitGotoStmt((GotoStmt)stmt);
+                    break;
+                }
+
+                case CX_StmtClass.CX_StmtClass_LabelStmt:
+                {
+                    VisitLabelStmt((LabelStmt)stmt);
+                    break;
+                }
+
                 default:
                 {
                     var context = string.Empty;
@@ -1181,6 +1199,20 @@ namespace ClangSharp
 
                 previousStmt = stmt;
             }
+        }
+
+        private void VisitGotoStmt(GotoStmt stmt)
+        {
+            _outputBuilder.Write("goto");
+            _outputBuilder.Write(' ');
+            _outputBuilder.Write(stmt.Label);
+            _outputBuilder.WriteLine(';');
+        }
+
+        private void VisitLabelStmt(LabelStmt stmt)
+        {
+            _outputBuilder.Write(stmt.Decl);
+            _outputBuilder.WriteLine(':');
         }
 
         private void VisitSwitchStmt(SwitchStmt switchStmt)
