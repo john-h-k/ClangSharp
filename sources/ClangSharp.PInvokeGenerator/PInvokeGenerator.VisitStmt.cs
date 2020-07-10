@@ -157,6 +157,13 @@ namespace ClangSharp
 
         private void VisitCXXConstructExpr(CXXConstructExpr cxxConstructExpr)
         {
+            var typeName = GetRemappedTypeName(cxxConstructExpr, context: null, cxxConstructExpr.Type, out _);
+
+            _outputBuilder.Write("new");
+            _outputBuilder.Write(' ');
+            _outputBuilder.Write(typeName);
+            _outputBuilder.Write('(');
+
             var args = cxxConstructExpr.Args;
 
             if (args.Count != 0)
@@ -170,6 +177,8 @@ namespace ClangSharp
                     Visit(args[i]);
                 }
             }
+
+            _outputBuilder.Write(')');
         }
 
         private void VisitCXXFunctionalCastExpr(CXXFunctionalCastExpr cxxFunctionalCastExpr)

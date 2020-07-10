@@ -2350,7 +2350,8 @@ namespace ClangSharp
                 // to have an init, even if it has no ctor
                 // but we can workaround this as the init expression is null
                 // in this case
-                if (varDecl.HasInit && varDecl.Init.ExprStmt != null)
+
+                if (varDecl.HasInit)
                 {
                     _outputBuilder.Write(' ');
                     _outputBuilder.Write('=');
