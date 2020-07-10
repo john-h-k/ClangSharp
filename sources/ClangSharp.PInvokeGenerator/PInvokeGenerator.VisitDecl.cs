@@ -2345,7 +2345,12 @@ namespace ClangSharp
 
                 _outputBuilder.Write(EscapeName(name));
 
-                if (varDecl.HasInit)
+                // Clang seems to consider the statement
+                // SOME_STRUCT foo;
+                // to have an init, even if it has no ctor
+                // but we can workaround this as the init expression is null
+                // in this case
+                if (varDecl.HasInit && varDecl.Init.ExprStmt != null)
                 {
                     _outputBuilder.Write(' ');
                     _outputBuilder.Write('=');

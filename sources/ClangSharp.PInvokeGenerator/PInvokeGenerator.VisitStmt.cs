@@ -790,7 +790,11 @@ namespace ClangSharp
                     break;
                 }
 
-                // case CX_StmtClass.CX_StmtClass_GotoStmt:
+                case CX_StmtClass.CX_StmtClass_GotoStmt:
+                {
+                    VisitGotoStmt((GotoStmt)stmt);
+                    break;
+                }
 
                 case CX_StmtClass.CX_StmtClass_IfStmt:
                 {
@@ -800,7 +804,13 @@ namespace ClangSharp
 
                 // case CX_StmtClass.CX_StmtClass_IndirectGotoStmt:
                 // case CX_StmtClass.CX_StmtClass_MSDependentExistsStmt:
-                // case CX_StmtClass.CX_StmtClass_NullStmt:
+
+                case CX_StmtClass.CX_StmtClass_NullStmt:
+                {
+                    // intentionally ignore them. no semantic meaning, basically a typo
+                    break;
+                }
+
                 // case CX_StmtClass.CX_StmtClass_OMPAtomicDirective:
                 // case CX_StmtClass.CX_StmtClass_OMPBarrierDirective:
                 // case CX_StmtClass.CX_StmtClass_OMPCancelDirective:
@@ -1141,29 +1151,16 @@ namespace ClangSharp
                 }
 
                 // case CX_StmtClass.CX_StmtClass_VAArgExpr:
-                // case CX_StmtClass.CX_StmtClass_LabelStmt:
-
-                case CX_StmtClass.CX_StmtClass_WhileStmt:
-                {
-                    VisitWhileStmt((WhileStmt)stmt);
-                    break;
-                }
-
-                case CX_StmtClass.CX_StmtClass_NullStmt:
-                {
-                    // intentionally ignore them. no semantic meaning, basically a typo
-                    break;
-                }
-
-                case CX_StmtClass.CX_StmtClass_GotoStmt:
-                {
-                    VisitGotoStmt((GotoStmt)stmt);
-                    break;
-                }
 
                 case CX_StmtClass.CX_StmtClass_LabelStmt:
                 {
                     VisitLabelStmt((LabelStmt)stmt);
+                    break;
+                }
+
+                case CX_StmtClass.CX_StmtClass_WhileStmt:
+                {
+                    VisitWhileStmt((WhileStmt)stmt);
                     break;
                 }
 
