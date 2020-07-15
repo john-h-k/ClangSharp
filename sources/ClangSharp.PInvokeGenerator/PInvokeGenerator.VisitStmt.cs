@@ -157,7 +157,8 @@ namespace ClangSharp
 
         private void VisitCXXConstructExpr(CXXConstructExpr cxxConstructExpr)
         {
-            var typeName = GetRemappedTypeName(cxxConstructExpr, context: null, cxxConstructExpr.Type, out _);
+            var decl = cxxConstructExpr.Constructor;
+            var typeName = GetRemappedTypeName(decl, context: null, decl.ThisObjectType, out _);
 
             _outputBuilder.Write("new");
             _outputBuilder.Write(' ');
